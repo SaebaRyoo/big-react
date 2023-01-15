@@ -1,15 +1,39 @@
 import { beginWork } from './beginWork';
 import { completeWork } from './completeWork';
-import { FiberNode } from './fiber';
+import { createWorkInProgres, FiberNode, FiberRootNode } from './fiber';
+import { HostRoot } from './workTags';
 
 // 当前工作单元
 let workInProgress: FiberNode | null = null;
 
-function prepareFreshStack(fiber: FiberNode) {
-	workInProgress = fiber;
+function prepareFreshStack(root: FiberRootNode) {
+	workInProgress = createWorkInProgres(root.current, {});
 }
 
-function renderRoot(root: FiberNode) {
+// 在合适的时机调用该函数，完成组件的mount和update
+export function scheduleUpdateOnFiber(fiber: FiberNode) {
+	// TODO: 调度功能
+	const root = markUpdateFromFiberToRoot(fiber);
+	renderRoot(root);
+}
+
+function markUpdateFromFiberToRoot(fiber: FiberNode) {
+	let node = fiber;
+	let parent = node.return;
+	while (parent !== null) {
+		// parent !== null 表示是update阶段，那么需要一直向上查找到root节点
+		node = parent;
+		parent = node.return;
+	}
+
+	if (node.tag === HostRoot) {
+		// 已经到了根节点
+		return node.stateNode;
+	}
+	return null;
+}
+
+function renderRoot(root: FiberRootNode) {
 	// 初始化
 	prepareFreshStack(root);
 
@@ -19,11 +43,19 @@ function renderRoot(root: FiberNode) {
 			workLoop();
 			break;
 		} catch (e) {
-			console.warn('workLoop发生错误', e);
+			if (__DEV__) {
+				console.warn('workLoop发生错误', e);
+			}
 			// 重置
 			workInProgress = null;
 		}
 	} while (true);
+
+	const finishedWork = root.current.alternate;
+	root.finishedWork = finishedWork;
+
+	// 根据wip fiberNode树中的flags执行具体操作
+	// commitRoot(root);
 }
 
 function workLoop() {
