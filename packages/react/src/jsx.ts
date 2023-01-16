@@ -17,7 +17,7 @@ const ReactElement = function (
 	props: Props
 ): ReactElementType {
 	const element = {
-		$$typeof: REACT_ELEMENT_TYPE,
+		$$typeof: REACT_ELEMENT_TYPE, // 内置类型
 		type,
 		key,
 		ref,

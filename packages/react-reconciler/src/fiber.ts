@@ -1,8 +1,7 @@
-import { Props, Key, Ref } from 'shared/ReactTypes';
+import { Props, Key, Ref, ReactElementType } from 'shared/ReactTypes';
 import { WorkTag, FunctionComponent, HostComponent } from './workTags';
 import { NoFlags, Flags } from './fiberFlags';
 import { Container } from 'hostConfig';
-import { ReactElementType } from '../../shared/ReactTypes';
 
 export class FiberNode {
 	type: any;

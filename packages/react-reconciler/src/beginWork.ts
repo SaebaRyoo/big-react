@@ -1,7 +1,7 @@
 import { FiberNode } from './fiber';
 import { UpdateQueue, processUpdateQueue } from './updateQueue';
 import { HostRoot, HostComponent, HostText } from './workTags';
-import { ReactElementType } from '../../shared/ReactTypes';
+import { ReactElementType } from 'shared/ReactTypes';
 import { reconcileChildFibers, mountChildFibers } from './childFibers';
 
 // beginWork就是递归过程中的递阶段

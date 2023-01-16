@@ -1,5 +1,6 @@
 import {
 	appendInitialChild,
+	Container,
 	createInstance,
 	createTextInstance
 } from 'hostConfig';
@@ -20,7 +21,8 @@ export const completeWork = (wip: FiberNode) => {
 			} else {
 				// mount
 				// 1. 构建DOM
-				const instance = createInstance(wip.type, newProps);
+				// const instance = createInstance(wip.type, newProps);
+				const instance = createInstance(wip.type);
 				// 2. 将DOM插入到DOM树中
 				appendAllChildren(instance, wip);
 				wip.stateNode = instance;
@@ -49,14 +51,13 @@ export const completeWork = (wip: FiberNode) => {
 	}
 };
 
-function appendAllChildren(parent: FiberNode, wip: FiberNode) {
+function appendAllChildren(parent: Container, wip: FiberNode) {
 	let node = wip.child;
 	// wip可能不是一个宿主元素类型，所以需要递归向下查找第一个HostComponent类型的节点。比如下面这个例子
 	/**
 	 * const B = () => {
 	 *    return <span></span>
 	 * }
-	 *
 	 * 要渲染<h1><B/></h1>
 	 */
 	while (node !== null) {
