@@ -1,8 +1,14 @@
 import { FiberNode } from './fiber';
 import { UpdateQueue, processUpdateQueue } from './updateQueue';
-import { HostRoot, HostComponent, HostText } from './workTags';
+import {
+	HostRoot,
+	HostComponent,
+	HostText,
+	FunctionComponent
+} from './workTags';
 import { ReactElementType } from 'shared/ReactTypes';
 import { reconcileChildFibers, mountChildFibers } from './childFibers';
+import { renderWithHooks } from './fiberHooks';
 
 // beginWork就是递归过程中的递阶段
 export const beginWork = (wip: FiberNode): FiberNode | null => {
@@ -16,6 +22,8 @@ export const beginWork = (wip: FiberNode): FiberNode | null => {
 		case HostText:
 			// 说明已经递到了最深层叶子节点，然后就是开启归阶段
 			return null;
+		case FunctionComponent:
+			return updateFunctionComponent(wip);
 		default:
 			if (__DEV__) {
 				console.warn('beginWork未实现的类型');
@@ -24,6 +32,12 @@ export const beginWork = (wip: FiberNode): FiberNode | null => {
 	}
 	return null;
 };
+
+function updateFunctionComponent(wip: FiberNode) {
+	const nextChildren = renderWithHooks(wip);
+	reconcileChildren(wip, nextChildren);
+	return wip.child;
+}
 
 function updateHostRoot(wip: FiberNode) {
 	const baseState = wip.memoizedState;

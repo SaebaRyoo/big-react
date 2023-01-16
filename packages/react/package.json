@@ -2,7 +2,7 @@
 	"name": "react",
 	"version": "1.0.0",
 	"description": "react公共方法",
-	"module": "src/index.ts",
+	"module": "index.ts",
 	"dependencies": {
 		"shared": "workspace:*"
 	},
