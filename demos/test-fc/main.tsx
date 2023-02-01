@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
-const MyChildren = (props: any) => <span>{props.name}</span>;
+const MyChildren = (props: any) => <span>big-react</span>;
 // const jsx = (<div>Hello <MyChildren name="world"/><MyChildren name="pretty"/></div>)
 // const jsx = (<div><span>hello</span></div>)
 
-const App = () => (
-	<div>
-		<span>
-			<MyChildren name="big-react" />
-		</span>
-	</div>
-);
+const App = () => {
+	const [num, setNum] = useState(100);
+	window.setNum = setNum;
+	return num === 3 ? (
+		<div>
+			<span>
+				<MyChildren name={num} />
+			</span>
+		</div>
+	) : (
+		<div>{num}</div>
+	);
+};
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<App />

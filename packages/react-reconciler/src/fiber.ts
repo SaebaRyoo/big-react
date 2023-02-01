@@ -23,6 +23,7 @@ export class FiberNode {
 	flags: Flags;
 	subtreeFlags: Flags;
 	updateQueue: unknown;
+	deletions: FiberNode[] | null;
 
 	constructor(tag: WorkTag, pendingProps: Props, key: Key) {
 		// 实例
@@ -48,6 +49,7 @@ export class FiberNode {
 		this.memoizedProps = null; // 当前工作单元工作完后的props
 		this.memoizedState = null;
 		this.updateQueue = null;
+		this.deletions = null;
 
 		// 用于current FiberNode和 wip FiberNode切换，如果当前的Fiber是current,
 		// 那alternate指向wip,如果当前的FiberNode是wip，那alternate指向current(双缓存)
@@ -90,6 +92,7 @@ export const createWorkInProgres = (
 		// 更新副作用
 		wip.flags = NoFlags;
 		wip.subtreeFlags = NoFlags;
+		wip.deletions = null;
 	}
 	wip.type = current.type;
 	wip.updateQueue = current.updateQueue;
