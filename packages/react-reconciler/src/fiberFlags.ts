@@ -10,4 +10,5 @@ export const Placement = 0b0000001; // 插入
 export const Update = 0b0000010; // 更新
 export const ChildDeletion = 0b0000100; // 删除子节点
 
+// 副作用对应的flags
 export const MutationMask = Placement | Update | ChildDeletion;

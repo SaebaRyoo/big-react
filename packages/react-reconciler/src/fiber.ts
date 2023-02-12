@@ -33,6 +33,7 @@ export class FiberNode {
 		this.stateNode = null;
 
 		// 比如对于 FunctionComponent，保存的就是它本身，如果是一个宿主元素<div>,那么这个type就是'div'
+		// 用于在reconciler的beginWork阶段判断节点是否改变是否需要更新
 		this.type = null;
 
 		// 指向父节点(因为FiberNode不仅是存储单元，还是工作单元，所以命名为return表示到下一个工作节点，而不是parent)

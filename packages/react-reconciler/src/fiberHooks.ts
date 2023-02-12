@@ -81,8 +81,10 @@ function updateWorkInProgressHook(): Hook {
 		// 这是这个FC update时的第一个hook
 		const current = currentlyRenderingFiber?.alternate;
 		if (current !== null) {
+			// 这里的 memoizedState 是fiber上用于存放Hook State的
 			nextCurrentHook = current?.memoizedState;
 		} else {
+			// nextCurrentHook = null mount阶段， 不应该进这里，边界情况
 			nextCurrentHook = null;
 		}
 	} else {

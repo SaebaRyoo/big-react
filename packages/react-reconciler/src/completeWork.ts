@@ -15,7 +15,7 @@ import { NoFlags, Update } from './fiberFlags';
 import { updateFiberProps } from 'react-dom/src/SyntheticEvent';
 
 // 标记更新
-function markUpDate(fiber: FiberNode) {
+function markUpdate(fiber: FiberNode) {
 	fiber.flags |= Update;
 }
 
@@ -49,7 +49,7 @@ export const completeWork = (wip: FiberNode) => {
 				const oldText = current.memoizedProps.content;
 				const newText = newProps.content;
 				if (oldText !== newText) {
-					markUpDate(wip);
+					markUpdate(wip);
 				}
 			} else {
 				// mount

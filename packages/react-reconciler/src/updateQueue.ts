@@ -1,5 +1,5 @@
 import { Action } from 'shared/ReactTypes';
-import { Dispatch } from '../../react/src/currentDispatcher';
+import { Dispatch } from 'react/src/currentDispatcher';
 
 // 代表更新的数据结构 (this.setState())
 export interface Update<State> {

@@ -98,6 +98,7 @@ function workLoop() {
 function performUnitOfWork(fiber: FiberNode) {
 	// 子fiber或者是null
 	const next = beginWork(fiber);
+	// 记录执行beginWork前的props
 	fiber.memoizedProps = fiber.pendingProps;
 
 	if (next === null) {
