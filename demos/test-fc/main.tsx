@@ -7,24 +7,24 @@ const MyChildren = (props: any) => <span>{props.name}</span>;
 
 const App = () => {
 	const [num, setNum] = useState(100);
-	const [flag, setFlag] = useState(true);
-	let num1;
-	if (flag) {
-		const [num2, setNum1] = useState(1001);
-		num1 = num2;
-	}
-	window.setNum = setNum;
-	console.log('num: ', num);
-	console.log('num1: ', num1);
+
+	const arr =
+		num % 2 === 0
+			? [<li key="1">1</li>, <li key="2">2</li>, <li key="3">3</li>]
+			: [<li key="3">3</li>, <li key="2">2</li>, <li key="1">1</li>];
+
 	return (
-		<div
-			onClickCapture={() => {
-				setFlag(false);
-				setNum(num + 1);
-			}}
-		>
+		<div>
+			<button
+				onClick={() => {
+					setNum(num + 1);
+				}}
+			>
+				点击
+			</button>
 			<span>
-				<MyChildren name={num} />
+				{/* <MyChildren name={num} /> */}
+				{arr}
 			</span>
 		</div>
 	);
