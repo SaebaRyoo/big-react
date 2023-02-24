@@ -1,5 +1,10 @@
 import { Props, Key, Ref, ReactElementType } from 'shared/ReactTypes';
-import { WorkTag, FunctionComponent, HostComponent } from './workTags';
+import {
+	WorkTag,
+	FunctionComponent,
+	HostComponent,
+	Fragment
+} from './workTags';
 import { NoFlags, Flags } from './fiberFlags';
 import { Container } from 'hostConfig';
 
@@ -28,7 +33,7 @@ export class FiberNode {
 	constructor(tag: WorkTag, pendingProps: Props, key: Key) {
 		// 实例
 		this.tag = tag;
-		this.key = key;
+		this.key = key || null;
 		// 比如对于 HostComponent 如果是个<div>，那么就保存这个div的DOM
 		this.stateNode = null;
 
@@ -41,6 +46,7 @@ export class FiberNode {
 		this.return = null;
 		this.sibling = null;
 		this.child = null;
+		// ul > li li li 一个fiber下有多个子fiber
 		this.index = 0;
 
 		this.ref = null;
@@ -117,5 +123,10 @@ export function createFiberFromElement(element: ReactElementType) {
 
 	const fiber = new FiberNode(fiberTag, props, key);
 	fiber.type = type;
+	return fiber;
+}
+
+export function createFiberFromFragment(elements: any[], key: Key): FiberNode {
+	const fiber = new FiberNode(Fragment, elements, key);
 	return fiber;
 }

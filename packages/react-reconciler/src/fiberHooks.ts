@@ -76,15 +76,17 @@ function updateState<State>(): [State, Dispatch<State>] {
 }
 
 function updateWorkInProgressHook(): Hook {
+	// TODO: render阶段触发的更新
 	let nextCurrentHook: Hook | null;
 	if (currentHook === null) {
-		// 这是这个FC update时的第一个hook
+		// 这是这个FC update时的第一个hook，找上次的hook数据
 		const current = currentlyRenderingFiber?.alternate;
 		if (current !== null) {
 			// 这里的 memoizedState 是fiber上用于存放Hook State的
 			nextCurrentHook = current?.memoizedState;
 		} else {
-			// nextCurrentHook = null mount阶段， 不应该进这里，边界情况
+			// nextCurrentHook = null 表示当前工作的fiber没有alternate 是mount阶段， 不应该进这里，
+			// 还有一种就是边界情况，useState() 没有放在顶层，而是放在了条件中
 			nextCurrentHook = null;
 		}
 	} else {

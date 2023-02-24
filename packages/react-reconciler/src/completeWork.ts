@@ -13,6 +13,7 @@ import {
 } from './workTags';
 import { NoFlags, Update } from './fiberFlags';
 import { updateFiberProps } from 'react-dom/src/SyntheticEvent';
+import { Fragment } from './workTags';
 
 // 标记更新
 function markUpdate(fiber: FiberNode) {
@@ -59,10 +60,11 @@ export const completeWork = (wip: FiberNode) => {
 			}
 			bubbleProperties(wip);
 			return null;
+
+		// 下面几种tag类型都只需要处理bubble
 		case HostRoot:
-			bubbleProperties(wip);
-			return null;
 		case FunctionComponent:
+		case Fragment:
 			bubbleProperties(wip);
 			return null;
 		default:

@@ -9,6 +9,7 @@ import {
 import { ReactElementType } from 'shared/ReactTypes';
 import { reconcileChildFibers, mountChildFibers } from './childFibers';
 import { renderWithHooks } from './fiberHooks';
+import { Fragment } from './workTags';
 
 // beginWork就是递归过程中的递阶段
 export const beginWork = (wip: FiberNode): FiberNode | null => {
@@ -24,6 +25,8 @@ export const beginWork = (wip: FiberNode): FiberNode | null => {
 			return null;
 		case FunctionComponent:
 			return updateFunctionComponent(wip);
+		case Fragment:
+			return updateFragmentComponent(wip);
 		default:
 			if (__DEV__) {
 				console.warn('beginWork未实现的类型');
@@ -32,6 +35,12 @@ export const beginWork = (wip: FiberNode): FiberNode | null => {
 	}
 	return null;
 };
+
+function updateFragmentComponent(wip: FiberNode) {
+	const nextChildren = wip.pendingProps;
+	reconcileChildren(wip, nextChildren);
+	return wip.child;
+}
 
 function updateFunctionComponent(wip: FiberNode) {
 	const nextChildren = renderWithHooks(wip);
