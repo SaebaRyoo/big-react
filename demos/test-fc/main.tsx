@@ -11,12 +11,16 @@ const App = () => {
 	return (
 		<ul
 			onClick={() => {
-				setNum(num + 1);
+				// setNum(num + 1);
+				setNum((num) => num + 1);
+				setNum((num) => num + 1);
+				setNum((num) => num + 1);
 			}}
 		>
-			<li>a</li>
+			{num}
+			{/* <li>a</li>
 			<li>b</li>
-			{arr}
+			{arr} */}
 		</ul>
 	);
 };
