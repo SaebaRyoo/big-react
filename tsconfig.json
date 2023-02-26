@@ -22,5 +22,6 @@
 			"hostConfig": ["./react-dom/src/hostConfig.ts"]
 		}
 	},
-	"exclude": ["./demos/**/*"]
+	"exclude": ["./demos/**/*"],
+	"include": ["./packages/**/*"]
 }

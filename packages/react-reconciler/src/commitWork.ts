@@ -150,6 +150,7 @@ export function commitHookEffectListdestroy(flags: Flags, lastEffect: Effect) {
 	});
 }
 
+// 触发所有useEffect的回调，并且将返回值赋值destory
 export function commitHookEffectListCreate(flags: Flags, lastEffect: Effect) {
 	commitHookEffectList(flags, lastEffect, (effect) => {
 		const create = effect.create;
